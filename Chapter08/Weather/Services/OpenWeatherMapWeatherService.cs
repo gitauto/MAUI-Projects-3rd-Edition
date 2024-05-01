@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
-using Weather.Models;
+﻿using System.Globalization;
 using System.Text.Json;
+using Weather.Models;
 
 namespace Weather.Services;
 
@@ -10,7 +9,7 @@ public class OpenWeatherMapWeatherService : IWeatherService
     public async Task<Forecast> GetForecastAsync(double latitude, double longitude)
     {
         var language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-        var apiKey = "{AddYourApiKeyHere}";
+        var apiKey = "fd8a380a116566d447dc752abac555e7";
         var uri = $"https://api.openweathermap.org/data/2.5/forecast?lat={latitude}&lon={longitude}&units=metric&lang={language}&appid={apiKey}";
 
         var httpClient = new HttpClient();
@@ -33,7 +32,7 @@ public class OpenWeatherMapWeatherService : IWeatherService
 
     private DateTime ToDateTime(double unixTimeStamp)
     {
-        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        DateTime dateTime = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
         return dateTime;
     }

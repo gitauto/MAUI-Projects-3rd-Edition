@@ -11,7 +11,7 @@ public class ForecastGroup : List<ForecastItem>
     }
 
     public DateTime Date { get; set; }
-    public string DateAsString => Date.ToShortDateString();
+    public string DateAsString => Date.ToShortDateString() + " - " + Date.DayOfWeek.ToString();
     public List<ForecastItem> Items => this;
 }
 
