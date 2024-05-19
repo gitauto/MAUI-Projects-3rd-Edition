@@ -38,10 +38,7 @@ public partial class SwiperControl : ContentView
     {
         base.OnSizeAllocated(width, height);
 
-        if (Application.Current.MainPage == null)
-        {
-            return;
-        }
+        if (Application.Current.MainPage == null) { return; }
 
         _screenWidth = Application.Current.MainPage.Width;
     }
@@ -52,11 +49,7 @@ public partial class SwiperControl : ContentView
         var halfScreenWidth = width / 2;
         var deadZoneEnd = DeadZone * halfScreenWidth;
 
-        if (Math.Abs(panX) < deadZoneEnd)
-        {
-
-            return;
-        }
+        if (Math.Abs(panX) < deadZoneEnd) { return; }
 
         var passedDeadzone = panX < 0 ? panX + deadZoneEnd : panX - deadZoneEnd;
         var decisionZoneEnd = DecisionThreshold * halfScreenWidth; 
@@ -131,10 +124,7 @@ public partial class SwiperControl : ContentView
 
     private void PanCompleted()
     {
-        if (CheckForExitCriteria())
-        {
-            Exit();
-        }
+        if (CheckForExitCriteria()) { Exit(); }
 
         likeStackLayout.Opacity = 0;
         denyStackLayout.Opacity = 0;

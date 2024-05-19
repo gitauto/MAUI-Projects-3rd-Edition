@@ -27,7 +27,7 @@ public partial class MainPage : ContentPage
         photo.OnDeny += Handle_OnDeny;
         photo.OnLike += Handle_OnLike;
 
-        this.MainGrid.Children.Insert(0, photo);
+        MainGrid.Children.Insert(0, photo);
     }
 
     private void UpdateGui()
