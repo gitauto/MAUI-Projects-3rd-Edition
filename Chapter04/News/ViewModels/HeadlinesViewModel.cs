@@ -1,24 +1,18 @@
 ﻿namespace News.ViewModels;
 
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Web;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using News.Models;
 using News.Services;
+using System.Threading.Tasks;
+using System.Web;
 
-public partial class HeadlinesViewModel : ViewModel
+public partial class HeadlinesViewModel(INewsService newsService, INavigate navigation) : ViewModel(navigation)
 {
-    private readonly INewsService newsService;
+    private readonly INewsService newsService = newsService;
 
     [ObservableProperty]
     private NewsResult currentNews;
-
-    public HeadlinesViewModel(INewsService newsService, INavigate navigation) : base (navigation)
-    {
-        this.newsService = newsService;
-    }
 
     public async Task Initialize(string scope) => await Initialize(scope.ToLower() switch
     {

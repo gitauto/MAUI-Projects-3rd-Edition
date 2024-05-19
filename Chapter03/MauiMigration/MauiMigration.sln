@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiMigration.iOS", "MauiMi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiMigration", "MauiMigration\MauiMigration\MauiMigration.csproj", "{A0D7FEB6-41D0-46F2-AFB2-293F66B40277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMauiApp", "MyMauiApp\MyMauiApp.csproj", "{AFE3FC9D-2513-48C6-96BD-691803CA357F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyMauiApp", "MyMauiApp\MyMauiApp.csproj", "{AFE3FC9D-2513-48C6-96BD-691803CA357F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

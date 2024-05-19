@@ -4,28 +4,26 @@ namespace News.Views;
 
 public partial class HeadlinesView : ContentPage
 {
-    readonly HeadlinesViewModel viewModel;
+    private readonly HeadlinesViewModel _viewModel;
 
 	public HeadlinesView(HeadlinesViewModel viewModel)
 	{
-        this.viewModel = viewModel;
+        _viewModel = viewModel;
 		InitializeComponent();
-        Task.Run(async () => await Initialize(GetScopeFromRoute()));
+        Task.Run(async () => await Initialize(HeadlinesView.GetScopeFromRoute()));
     }
 
     private async Task Initialize(string scope)
     {
-        BindingContext = viewModel;
-        await viewModel.Initialize(scope);
+        BindingContext = _viewModel;
+        await _viewModel.Initialize(scope);
     }
 
-    private string GetScopeFromRoute()
+    private static string GetScopeFromRoute()
     {
-        // Hack: As the shell can't define query parameters
-        // in XAML, we have to parse the route. 
+        // Hack: As the shell can't define query parameters in XAML, we have to parse the route. 
         // as a convention the last route section defines the category.
-        var route = Shell.Current.CurrentState.Location
-            .OriginalString.Split("/").LastOrDefault();
+        var route = Shell.Current.CurrentState.Location.OriginalString.Split("/").LastOrDefault();
         return route;
     }
 }
