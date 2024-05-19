@@ -1,6 +1,8 @@
 ﻿using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace HotdogOrNot.ImageClassifier;
@@ -47,7 +49,7 @@ internal class MLNetClassifier : IClassifier
 
     static (Tensor<float>, byte[] resizedImage) LoadInputTensor(byte[] imageBytes, int imageSize, bool isBgr, bool isRange255)
     {
-        var input = new DenseTensor<float>(new[] { 1, 3, imageSize, imageSize });
+        var input = new DenseTensor<float>([1, 3, imageSize, imageSize]);
         byte[] pixelBytes;
 
         using (var image = Image.Load<Rgba32>(imageBytes))
