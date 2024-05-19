@@ -1,5 +1,4 @@
-﻿using System;
-namespace Weather;
+﻿namespace Weather;
 
 internal partial class AppPermissions
 {

@@ -5,7 +5,7 @@ namespace Calculator.ViewModels;
 
 public partial class MainPageViewModel
 {
-    IMessenger messenger;
+    readonly IMessenger messenger;
 
     public MainPageViewModel(Calculations results, IMessenger messenger)
     {

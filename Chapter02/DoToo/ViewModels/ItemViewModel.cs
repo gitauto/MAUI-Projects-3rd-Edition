@@ -24,5 +24,4 @@ public partial class ItemViewModel : ViewModel
         await repository.AddOrUpdateAsync(Item);
         await Navigation.PopAsync();
     }
-
 }

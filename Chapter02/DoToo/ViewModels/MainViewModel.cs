@@ -9,8 +9,8 @@ using System.Collections.ObjectModel;
 
 public partial class MainViewModel : ViewModel
 {
-    private readonly ITodoItemRepository repository;
-    private readonly IServiceProvider services;
+    private readonly ITodoItemRepository _repository;
+    private readonly IServiceProvider _services;
 
     [ObservableProperty]
     ObservableCollection<TodoItemViewModel> items;
@@ -27,21 +27,18 @@ public partial class MainViewModel : ViewModel
 
     public MainViewModel(ITodoItemRepository repository, IServiceProvider services)
     {
-        this.repository = repository;
+        _repository = repository;
         repository.OnItemAdded += (sender, item) => Items.Add(CreateTodoItemViewModel(item));
         repository.OnItemUpdated += (sender, item) => Task.Run(async () => await LoadDataAsync());
 
-        this.services = services;
+        _services = services;
         Task.Run(async () => await LoadDataAsync());
     }
 
     private async Task LoadDataAsync()
     {
-        var items = await repository.GetItemsAsync(); 
-        if (!ShowAll)
-        {
-            items = items.Where(x => x.Completed == false).ToList();
-        }
+        var items = await _repository.GetItemsAsync(); 
+        if (!ShowAll) { items = items.Where(x => x.Completed == false).ToList(); }
 
         var itemViewModels = items.Select(i => CreateTodoItemViewModel(i));
         Items = new ObservableCollection<TodoItemViewModel>(itemViewModels);
@@ -63,32 +60,25 @@ public partial class MainViewModel : ViewModel
                 Items.Remove(item);
             }
 
-            Task.Run(async () => await repository.UpdateItemAsync(item.Item));
+            Task.Run(async () => await _repository.UpdateItemAsync(item.Item));
         }
     }
 
     [RelayCommand]
-    public async Task AddItemAsync() => await Navigation.PushAsync(services.GetRequiredService<ItemView>());
+    public async Task AddItemAsync() => await Navigation.PushAsync(_services.GetRequiredService<ItemView>());
 
     [ObservableProperty]
     TodoItemViewModel selectedItem;
 
     partial void OnSelectedItemChanging(TodoItemViewModel value)
     {
-        if (value == null)
-        {
-            return;
-        }
-
-        MainThread.BeginInvokeOnMainThread(async () =>
-        {
-            await NavigateToItemAsync(value);
-        });
+        if (value == null) { return; }
+        MainThread.BeginInvokeOnMainThread(async () => await NavigateToItemAsync(value));
     }
 
     private async Task NavigateToItemAsync(TodoItemViewModel item)
     {
-        var itemView = services.GetRequiredService<ItemView>();
+        var itemView = _services.GetRequiredService<ItemView>();
         var vm = itemView.BindingContext as ItemViewModel;
         vm.Item = item.Item;
         itemView.Title = "Edit todo item";

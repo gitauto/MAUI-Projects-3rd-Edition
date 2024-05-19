@@ -14,6 +14,7 @@ public partial class MainView : ContentPage, IMainView
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
+
         if (BindingContext is MainViewModel viewModel)
         {
             MainThread.BeginInvokeOnMainThread(async () =>

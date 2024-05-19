@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Weather.Views;
+﻿namespace Weather.Views;
 
 public interface IMainView
 {

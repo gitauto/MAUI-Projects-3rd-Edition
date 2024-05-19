@@ -5,18 +5,20 @@
              x:Class="DoToo.Views.ItemView"
              x:DataType="viewModels:ItemViewModel"
              Title="New Todo Item">
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Command="{Binding SaveCommand}" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout Padding="14">
+    <VerticalStackLayout Padding="14">
         <Label Text="Title" />
         <Entry Text="{Binding Item.Title}" />
         <Label Text="Due" />
         <DatePicker Date="{Binding Item.Due}"/>
-        <StackLayout Orientation="Horizontal">
+        <HorizontalStackLayout>
             <Switch IsToggled="{Binding Item.Completed}" />
             <Label Text="Completed" />
-        </StackLayout>
-    </StackLayout>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+    
 </ContentPage>

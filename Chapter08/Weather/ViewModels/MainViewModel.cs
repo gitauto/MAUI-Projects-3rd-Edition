@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using Weather.Models;
 using Weather.Services;
 
 namespace Weather.ViewModels;
 
-public partial class MainViewModel : ViewModel
+public partial class MainViewModel(IWeatherService weatherService) : ViewModel
 {
-    private readonly IWeatherService weatherService;
+    private readonly IWeatherService weatherService = weatherService;
 
     [ObservableProperty]
     private string city;
@@ -26,11 +25,6 @@ public partial class MainViewModel : ViewModel
         await LoadDataAsync();
     }
 
-    public MainViewModel(IWeatherService weatherService)
-    {
-        this.weatherService = weatherService;
-    }
-
     public async Task LoadDataAsync()
     {
         IsRefreshing = true;
@@ -38,16 +32,13 @@ public partial class MainViewModel : ViewModel
         var status = await AppPermissions.CheckAndRequestRequiredPermissionAsync();
         if (status == PermissionStatus.Granted)
         {
-            var location = await Geolocation.GetLastKnownLocationAsync() ??
-                           await Geolocation.GetLocationAsync();
-
+            var location = await Geolocation.GetLastKnownLocationAsync() ?? await Geolocation.GetLocationAsync();
             var forecast = await weatherService.GetForecastAsync(location.Latitude, location.Longitude);
-
             var itemGroups = new List<ForecastGroup>();
 
             foreach (var item in forecast.Items)
             {
-                if (!itemGroups.Any())
+                if (itemGroups.Count == 0)
                 {
                     itemGroups.Add(new ForecastGroup(new List<ForecastItem>() { item })
                     {
@@ -58,7 +49,7 @@ public partial class MainViewModel : ViewModel
 
                 var group = itemGroups.SingleOrDefault(x => x.Date == item.DateTime.Date);
 
-                    if (group == null)
+                if (group == null)
                 {
                     itemGroups.Add(new ForecastGroup(new List<ForecastItem>() { item })
                     {
@@ -77,5 +68,4 @@ public partial class MainViewModel : ViewModel
 
         IsRefreshing = false;
     }
-
 }
